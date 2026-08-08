@@ -60,12 +60,12 @@
     <link rel="icon" href="../../_static/logo.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="CLI Reference" href="../../cli-reference/index.html" />
+    <link rel="next" title="Use the Virtual Accelerator" href="../use-virtual-accelerator.html" />
     <link rel="prev" title="Web Interface" href="web-interface.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Aug 08, 2026"/>
   </head>
   
   
@@ -368,18 +368,44 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../configure-providers.html">Configure LLM Providers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deploy-project.html">Container Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build-profiles.html">Build Profiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../add-mcp-server.html">Add an MCP Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use-web-terminal.html">Use the Web Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configure-providers.html">Configure LLM Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../run-open-models.html">Run Open &amp; Local Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy-project.html">Container Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../containerize-project.html">Containerize a Project</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../web-terminal/index.html">Web Terminal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../web-terminal/operate.html">Run the Web Terminal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../web-terminal/theming.html">Theming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../web-terminal/panels.html">Panels</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../multi-user.html">Multi-User Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../use-cli-chat.html">Use the CLI Chat Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use-python-executor.html">Python Execution Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../non_interactive_query.html">Non-Interactive Agent Queries</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../event-dispatch.html">Event Dispatch</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chat-bridges/index.html">Chat Bridges</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chat-bridges/nextcloud-talk.html">Nextcloud Talk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chat-bridges/google-chat.html">Google Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chat-bridges/add-a-channel.html">Add Your Own Chat Service</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitor-agent.html">Monitor Your OSPREY Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configure-health-checks.html">Configure Health Checks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../add-connector.html">Add a Connector</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../add-mcp-server.html">Add an MCP Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-python-executor.html">Python Execution Service</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../use-facility-knowledge.html">Facility Knowledge</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../facility-rules.html">Facility Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../okf-bundle.html">The OKF Bundle</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../use-channel-finder.html">How to Use the Channel Finder</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Logbook Search Service (ARIEL)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="osprey-integration.html">Osprey Integration</a></li>
@@ -389,6 +415,8 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Standalone Deployment</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-virtual-accelerator.html">Use the Virtual Accelerator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../agent-assisted-grid-scan.html">Agent-Assisted Grid Scan Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cli-reference/index.html">CLI Reference</a></li>
 </ul>
 </div>
@@ -533,7 +561,7 @@ connection.</p>
 <p class="sd-card-text">Generate Docker Compose files from your <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>, pull the
 PostgreSQL+pgvector container image, and start it in the
 background:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>deploy<span class="w"> </span>up
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>deploy<span class="w"> </span>up<span class="w"> </span>-d
 </pre></div>
 </div>
 <p class="sd-card-text">Once the container is running, run database migrations and
@@ -589,12 +617,13 @@ need to be.</p>
 <p>For small in-place adjustments to a project you just built, edit files
 directly:</p>
 <ol class="arabic">
-<li><p><strong>Edit</strong> <code class="docutils literal notranslate"><span class="pre">.claude/rules/facility.md</span></code>. The default ships with a
-placeholder for the “Example Research Facility” (Primary Source /
-Transport &amp; Delivery / Experimental Stations, with an EPICS channel
-pattern table). Replace this content with your facility’s real
-terminology, system names, and naming conventions so the agent uses
-the right vocabulary when interpreting user questions.</p>
+<li><p><strong>Edit</strong> <code class="docutils literal notranslate"><span class="pre">.claude/rules/facility.md</span></code>. The default ships with a thin
+placeholder for the “Example Research Facility (ERF)” — a facility-identity
+stub (name, type, mission) plus a pointer to the <code class="docutils literal notranslate"><span class="pre">facility_knowledge</span></code> tools
+(<code class="docutils literal notranslate"><span class="pre">list_concepts</span></code>/<code class="docutils literal notranslate"><span class="pre">read_concept</span></code>/<code class="docutils literal notranslate"><span class="pre">search</span></code>) for deeper content. Replace
+this with your facility’s real terminology, system names, and naming
+conventions so the agent uses the right vocabulary when interpreting user
+questions.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">.claude/rules/facility.md</span></code> is auto-registered as user-owned
@@ -602,8 +631,10 @@ during <code class="docutils literal notranslate"><span class="pre">osprey</span
 edits.</p>
 </div>
 </li>
-<li><p><strong>Set provider credentials in ``.env``</strong> (e.g. <code class="docutils literal notranslate"><span class="pre">ANTHROPIC_API_KEY</span></code>
-or <code class="docutils literal notranslate"><span class="pre">CBORG_API_KEY</span></code>). The default provider is <code class="docutils literal notranslate"><span class="pre">anthropic</span></code>.</p></li>
+<li><p><strong>Set provider credentials in ``my-logbook-profile/.env``</strong> (e.g.
+<code class="docutils literal notranslate"><span class="pre">ANTHROPIC_API_KEY</span></code> or <code class="docutils literal notranslate"><span class="pre">CBORG_API_KEY</span></code>). The default provider is
+<code class="docutils literal notranslate"><span class="pre">anthropic</span></code>. The profile owns the project’s secrets: the build derives the
+project’s <code class="docutils literal notranslate"><span class="pre">.env</span></code> from it, so a value set there survives every rebuild.</p></li>
 <li><p><strong>Replace the demo logbook seed.</strong> The bundled
 <code class="docutils literal notranslate"><span class="pre">data/logbook_seed/demo_logbook.json</span></code> is 28 entries of fictional
 accelerator events. Either:</p>
@@ -620,15 +651,19 @@ to point at your facility’s logbook system (see
 <section id="durable-customization-a-profile-you-own">
 <h3>Durable customization (a profile you own)<a class="headerlink" href="#durable-customization-a-profile-you-own" title="Link to this heading">#</a></h3>
 <p>For changes you want to keep across rebuilds — adding a custom skill,
-overriding a rule, wiring up a real logbook — scaffold an editable build
-profile that extends the <code class="docutils literal notranslate"><span class="pre">ariel-standalone</span></code> preset:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>build<span class="w"> </span>--emit-profile<span class="w"> </span>my-ariel-profile<span class="w"> </span>--preset<span class="w"> </span>ariel-standalone
+overriding a rule, wiring up a real logbook — materialize an editable build
+profile from the <code class="docutils literal notranslate"><span class="pre">ariel-standalone</span></code> preset:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>profile<span class="w"> </span>new<span class="w"> </span>my-ariel-profile<span class="w"> </span>--preset<span class="w"> </span>ariel-standalone
 </pre></div>
 </div>
-<p>This writes a <code class="docutils literal notranslate"><span class="pre">my-ariel-profile/</span></code> directory with <code class="docutils literal notranslate"><span class="pre">profile.yml</span></code> (extending
-the preset) plus <code class="docutils literal notranslate"><span class="pre">overlays/{rules,skills,agents}/</span></code> sentinels. Edit
-<code class="docutils literal notranslate"><span class="pre">profile.yml</span></code> to layer config overrides and overlay artifacts on top of the
-preset, then rebuild whenever you change something:</p>
+<p>This writes a <code class="docutils literal notranslate"><span class="pre">my-ariel-profile/</span></code> directory containing a standalone
+<code class="docutils literal notranslate"><span class="pre">profile.yml</span></code> — the preset’s full configuration written out explicitly, with
+no <code class="docutils literal notranslate"><span class="pre">extends:</span></code> back to the preset — plus the preset’s <code class="docutils literal notranslate"><span class="pre">data/</span></code> tree and an
+<code class="docutils literal notranslate"><span class="pre">.env.example</span></code> listing every variable the agent reads. Directories for your
+own artifacts are not created up front: make a <code class="docutils literal notranslate"><span class="pre">rules/</span></code>, <code class="docutils literal notranslate"><span class="pre">skills/</span></code> or
+<code class="docutils literal notranslate"><span class="pre">agents/</span></code> directory when you have something to put in it, and the build
+carries its contents into the project. Edit <code class="docutils literal notranslate"><span class="pre">profile.yml</span></code>, the data files, and
+those directories, then rebuild whenever you change something:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>build<span class="w"> </span>my-ariel<span class="w"> </span>./my-ariel-profile/profile.yml
 </pre></div>
 </div>
@@ -660,11 +695,11 @@ project model.</p>
       </div>
     </a>
     <a class="right-next"
-       href="../../cli-reference/index.html"
+       href="../use-virtual-accelerator.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">CLI Reference</p>
+        <p class="prev-next-title">Use the Virtual Accelerator</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

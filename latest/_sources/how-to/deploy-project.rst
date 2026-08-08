@@ -29,16 +29,19 @@ Overview
 ``osprey deploy`` renders each service's Jinja2 Docker Compose template,
 copies source and configuration into a per-service build directory, and
 hands the result to Docker or Podman Compose. A new project built from the
-``control-assistant`` preset deploys exactly one service out of the box
-(``postgresql``); the ``hello-world`` preset deploys none. You only need
-this page when you add or customize a containerized service.
+``control-assistant`` preset deploys a full stack out of the box:
+``postgresql``, ``openobserve``, ``event_dispatcher`` and ``dispatch_worker``,
+``bluesky`` (with its co-deployed Tiled data server), ``virtual_accelerator``,
+``bluesky_panels``, and the multi-user web-terminal stack. Even the minimal
+``hello-world`` preset deploys one service (``openobserve``, for telemetry).
+You only need this page when you add or customize a containerized service.
 
 Service Configuration
 =====================
 
 Services are declared under ``services:`` in ``config.yml`` and selected for
-deployment via ``deployed_services:``. A minimal example (this is what the
-``control-assistant`` preset ships with):
+deployment via ``deployed_services:``. A minimal example (one of the services
+the ``control-assistant`` preset ships with):
 
 .. code-block:: yaml
 
@@ -47,7 +50,6 @@ deployment via ``deployed_services:``. A minimal example (this is what the
        path: ./services/postgresql
        database_name: ariel
        username: ariel
-       password: ariel
        port_host: 5432
 
    deployed_services:
@@ -56,18 +58,22 @@ deployment via ``deployed_services:``. A minimal example (this is what the
 Each service entry must point ``path:`` at a directory containing a
 ``docker-compose.yml.j2`` template. Everything else under the service key is
 project-specific configuration exposed to the template as
-``{{services.<name>.<key>}}``. For the canonical schema (including
-``copy_src``, ``additional_dirs``, ``render_kernel_templates``, and
-``containers`` for multi-container services), see :ref:`profile-services`.
+``{{services.<name>.<key>}}``. Beyond ``path``, a service entry may also
+declare ``copy_src``, ``additional_dirs``, and ``render_kernel_templates``
+(a multi-container service is expressed by the ``docker-compose.yml.j2``
+template defining more than one compose service). For how facility services
+are declared inside a build profile, see :ref:`profile-services`.
 
 Service lookup namespaces
 -------------------------
 
-``find_service_config`` resolves a name from ``deployed_services`` in three
-places, in order: ``osprey.<name>``, ``applications.<app>.<name>``, and
-top-level ``services.<name>``. The flat form shown above is the legacy
-pattern; the namespaced forms are preferred for build profiles that ship
-multiple applications.
+A name in ``deployed_services`` is looked up by its literal spelling — there
+is no search order. A plain name like ``postgresql`` resolves to top-level
+``services.postgresql``. A dotted name picks its namespace explicitly:
+``osprey.<name>`` reads ``osprey.services.<name>``, and
+``applications.<app>.<name>`` reads ``applications.<app>.services.<name>``.
+The flat form shown above is the common case; the namespaced forms exist for
+build profiles that ship multiple applications.
 
 CLI Commands
 ============
@@ -79,8 +85,13 @@ CLI Commands
    osprey deploy restart              # Stop then start services
    osprey deploy status               # Show status table
    osprey deploy build                # Render compose files without starting
-   osprey deploy clean                # Remove containers and volumes (destructive)
+   osprey deploy clean                # Remove containers, volumes, and images (destructive)
    osprey deploy rebuild              # Clean, rebuild, and restart services
+   osprey deploy seed [USER]          # (Re)seed multi-user web-terminal workspaces
+   osprey deploy decommission USER    # Remove one user's workspace (--archive | --purge)
+   osprey deploy prune                # Remove workspaces of users no longer in the index
+                                      #   (--archive | --purge, --dry-run)
+   osprey deploy nuke                 # Tear down the whole multi-user stack (destructive)
 
 Full command and flag reference: :doc:`../cli-reference/index`. Note there
 is no ``osprey deploy logs`` subcommand — use ``docker logs <name>`` or
@@ -109,9 +120,49 @@ When ``osprey deploy up`` runs:
 5. If ``copy_src: true``, copy ``src/`` into the build as ``repo_src/``, plus ``requirements.txt`` and ``pyproject.toml`` (renamed ``pyproject_user.toml``).
 6. With ``--dev``, build a wheel from the local Osprey checkout and drop it into the build dir.
 7. Copy any ``additional_dirs`` into the build.
-8. Auto-create ``_agent_data/`` subdirectories declared under ``file_paths``.
+8. Auto-create the ``_agent_data/`` subdirectories the deploy step sweeps (currently ``registry_exports_dir``). Others declared under ``file_paths`` — ``api_calls_dir`` — are created on demand by the code that writes to them.
 9. Write a flattened ``config.yml`` per service. ``${VAR}`` placeholders are preserved (secrets stay out of the rendered output and are resolved at container start).
 10. Shell out to ``docker compose`` / ``podman compose``.
+
+Keeping a Rendered Project Up to Date
+=====================================
+
+A project directory is a *rendered artifact*: ``osprey build`` writes its
+``config.yml`` and service scaffolding from the **build profile**, and
+``osprey deploy up`` deploys exactly what that rendered config describes. If
+the profile or the framework gains features after the render, the stale project
+still deploys "successfully" — just without them.
+
+To update an existing project, re-run the build with ``--force``::
+
+   osprey build my-project my-profile/profile.yml --force
+   cd my-project && osprey deploy up -d
+
+``--force`` re-renders everything framework-owned and preserves what you
+own: ``.env`` values (secrets, and the service tokens/passwords your
+existing docker volumes were initialized with), ``_agent_data/``, and the
+project's ``.git`` history. ``data/`` is re-materialized from the profile.
+The profile directory itself is never touched by a build.
+Avoid guarding the build behind a directory-existence check
+(``[ -d my-project ] || osprey build ...``) — "exists" is not "current",
+and the guard silently skips exactly the re-render that an updated profile
+needs.
+
+Two guards make render drift visible:
+
+* **Staleness advisory** — ``osprey deploy up`` and ``osprey deploy status``
+  compare the project's recorded provenance (osprey version and a content
+  hash of the resolved profile, stamped into ``.osprey-manifest.json`` at
+  build time) against what is on disk now, and warn when the render is
+  out of date — ``up`` prints the exact rebuild command, ``status`` a
+  general reminder. The hash covers the profile's data tree and convention
+  directories as well as ``profile.yml``, so regenerating a channel database
+  or adding a rule trips it too. The warning never blocks a deploy; projects
+  built before the hash existed get the version comparison only.
+* **Endpoint summary** — every ``osprey deploy up`` ends with a summary of
+  the published service endpoints, including an explicit ``web terminal
+  (not configured in this project)`` line when the config declares no web
+  tier, so a missing service is a stated fact rather than a silent absence.
 
 Docker Compose Templates
 ========================
@@ -153,6 +204,81 @@ Common access patterns: ``{{services.<name>.<key>}}``,
 ``{{deployment.bind_address}}``, and ``{{osprey_labels.project_name}}`` /
 ``project_root`` / ``deployed_at`` (injected by the deploy engine).
 
+Service Template Ownership
+==========================
+
+The service templates under ``<project>/services/`` are framework-managed:
+every ``osprey build`` refreshes them from the installed OSPREY version, so
+compose fixes reach your project automatically. Do not edit them in place —
+your changes would be overwritten on the next build.
+
+To customize a service template, claim it — which **moves** it into the build
+profile the project was built from, where edits survive:
+
+.. code-block:: bash
+
+   osprey scaffold claim services/postgresql   # move it into the profile
+   osprey scaffold diff services/postgresql    # compare yours against the framework
+   osprey scaffold unclaim services/postgresql # restore framework management
+
+Edit the moved copy under ``<profile>/services/postgresql/``, then rebuild with
+``--force`` to deploy it. Every build copies it back and marks it yours, so
+later re-renders leave it alone. ``osprey scaffold list`` shows what is
+framework-managed and what is yours; the same mechanism covers the agent
+artifacts (rules, agents, skills, hooks). See :ref:`profile-claim` for the full
+workflow and the artifacts a claim refuses.
+
+Before reaching for a claim, check whether a config key or environment
+variable already covers your need — most service knobs (ports, images,
+credentials, retention) are configurable without forking the template.
+
+Overriding Service Images
+=========================
+
+Every service image resolves through the same three-layer chain — an
+environment variable wins, then a ``config.yml`` key, then the packaged
+default:
+
+.. list-table::
+   :header-rows: 1
+
+   * - Service
+     - Environment variable
+     - Config key
+   * - postgresql
+     - ``OSPREY_POSTGRES_IMAGE``
+     - ``services.postgresql.image``
+   * - openobserve
+     - ``OSPREY_OPENOBSERVE_IMAGE``
+     - ``services.openobserve.image``
+   * - event_dispatcher
+     - ``OSPREY_DISPATCH_IMAGE``
+     - ``services.event_dispatcher.image``
+   * - dispatch_worker
+     - ``OSPREY_WORKER_IMAGE``
+     - ``services.dispatch_worker.image``
+   * - nextcloud_bridge
+     - ``OSPREY_NEXTCLOUD_BRIDGE_IMAGE``
+     - ``services.nextcloud_bridge.image``
+   * - gchat_bridge
+     - ``OSPREY_GCHAT_BRIDGE_IMAGE``
+     - ``services.gchat_bridge.image``
+   * - bluesky
+     - ``OSPREY_BLUESKY_BRIDGE_IMAGE``
+     - ``services.bluesky.image``
+   * - bluesky (Tiled sidecar)
+     - ``OSPREY_TILED_IMAGE``
+     - ``services.bluesky.tiled_image``
+   * - bluesky_panels
+     - ``OSPREY_BLUESKY_PANELS_IMAGE``
+     - ``services.bluesky_panels.image``
+   * - virtual_accelerator
+     - ``OSPREY_VA_IMAGE``
+     - ``services.virtual_accelerator.image``
+
+Point either layer at an internal registry mirror or a pinned digest when
+your deployment host cannot (or should not) pull public images.
+
 Network Binding and Security
 ============================
 
@@ -168,13 +294,55 @@ Environment Variables (``.env``)
 =================================
 
 The deploy system passes a ``.env`` file from the project root to Docker /
-Podman Compose via ``--env-file``. Variables defined there are available to
-Compose substitution and to running containers.
+Podman Compose via ``--env-file``. Compose uses these values to fill in
+``${VAR}`` placeholders in the rendered compose files; a variable reaches a
+running container only where a template maps it in.
+
+The project's ``.env`` is **derived from the build profile's**, so that is where
+you set a value:
 
 .. code-block:: bash
 
-   cp .env.example .env
-   # Edit .env with your actual values
+   cp my-profile/.env.example my-profile/.env
+   # Edit my-profile/.env with your actual values, then rebuild
+
+Editing the project copy directly works for the current deploy but does not
+survive a rebuild — the next ``osprey build`` re-derives the file from the
+profile. See :ref:`profile-secrets`.
+
+``osprey deploy up`` also *writes* to these files. On first deploy it mints any
+missing service tokens and passwords (for example ``EVENT_DISPATCHER_TOKEN``,
+``ZO_ROOT_USER_PASSWORD``, or ``ARIEL_DB_PASSWORD``) so services never start
+with blank or publicly-known credentials, restricts the file to owner-only
+permissions, and then writes those values **back into the profile's** ``.env``
+under a "Minted by deploy" heading. That is what makes the stack reproducible: a
+rebuild from the same profile comes up on the same credentials instead of
+minting a second set the running containers do not trust.
+
+The write-back never overwrites. A value already in the profile wins — it is
+pinned by the docker volume that was initialized with it — and a deploy whose
+own value disagrees says so by variable name (never by value) and keeps using
+its own, leaving you to reconcile the two.
+
+If the profile cannot be reached — it has moved or been deleted, or the project
+was built before this mechanism existed — the deploy still succeeds. The secrets
+stay in the project ``.env``, a warning names the path that failed, and the
+project records that its ``.env`` is the only copy; a later
+``osprey build --force`` repeats that warning before it touches the directory.
+Back that file up.
+
+Keep both ``.env`` files out of version control (the profile's ``.gitignore``
+does this for you).
+
+.. note::
+
+   Postgres reads ``ARIEL_DB_PASSWORD`` (as ``POSTGRES_PASSWORD``) only when
+   initializing a **fresh** data volume. A volume created before the password
+   was minted keeps its original password; the ``${ARIEL_DB_PASSWORD:-ariel}``
+   fallback — applied by the compose template and by the DSN the agent derives
+   from ``services.postgresql`` — keeps such deployments working. To adopt
+   the minted password, remove the ``ariel_postgres_data`` volume and redeploy
+   (this deletes the stored logbook data — re-ingest afterwards).
 
 If no ``.env`` file is found, services start with default/empty environment
 variables and a warning is logged.
@@ -189,9 +357,11 @@ instead of the PyPI version:
 
    osprey deploy up --dev
 
-The system builds a wheel from your local Osprey source and copies it into
-each service's build directory, then sets ``DEV_MODE=true`` in the
-container environment. If the local source cannot be found (e.g., Osprey
+The system builds a wheel from your local Osprey source, copies it into each
+service's build directory, and rebuilds the service images with that wheel
+installed — the images are built first, then started as-is. Your dev source
+is baked into the image at build time; nothing changes inside an
+already-running container. If the local source cannot be found (e.g., Osprey
 was installed from PyPI rather than editable mode), containers fall back to
 the PyPI version.
 
@@ -218,7 +388,8 @@ inspect rendered files under ``build/services/<name>/``.
 hints; on macOS, start Docker Desktop or run ``podman machine start``.
 
 **``--dev`` issues:** Confirm the Osprey wheel (``.whl``) exists in the
-service build directory; check ``DEV_MODE`` env var inside the container.
+service build directory, and that the image was rebuilt after your source
+change — rerun ``osprey deploy up --dev`` to rebuild it.
 
 .. seealso::
 
@@ -227,3 +398,8 @@ service build directory; check ``DEV_MODE`` env var inside the container.
 
    :ref:`profile-services`
        Authoritative ``services:`` schema for build profiles.
+
+   :doc:`containerize-project`
+       The *project image* (assistant + web terminal in one container) built
+       from the generated ``Dockerfile`` — distinct from the service
+       containers this page covers.

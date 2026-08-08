@@ -56,11 +56,11 @@ Osprey agent selects the appropriate tool based on the user's query.
    * - ``browse``
      - Browse entries with pagination and filters
    * - ``filter_options``
-     - Get available filter values (tags, authors, date ranges)
+     - Get distinct values for a filterable field (authors or source systems)
    * - ``status``
      - Check ARIEL service health and configuration
    * - ``entry_publish``
-     - Publish a new logbook entry
+     - Publish an existing ARIEL entry to the facility logbook
    * - ``capabilities``
      - List available search capabilities and their status
    * - ``entry_get``
@@ -76,7 +76,9 @@ Osprey agent selects the appropriate tool based on the user's query.
 Search Result Structure
 =======================
 
-The MCP tool returns a structured result containing:
+Internally, each search produces an ``ARIELSearchResult`` with the fields
+below; the MCP tools serialize this into their own JSON envelope for the
+agent:
 
 .. list-table::
    :header-rows: 1
@@ -102,7 +104,7 @@ The MCP tool returns a structured result containing:
      - Explanation of results
    * - ``diagnostics``
      - ``tuple[SearchDiagnostic, ...]``
-     - Per-mode timing and result counts
+     - Structured diagnostics (level, source, message) from search execution
 
 
 Service Factory

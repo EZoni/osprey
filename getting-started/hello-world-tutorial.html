@@ -65,7 +65,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Aug 08, 2026"/>
   </head>
   
   
@@ -458,6 +458,15 @@ control system channels using the Osprey agent.</p>
 <span class="nb">cd</span><span class="w"> </span>my-first-agent
 </pre></div>
 </div>
+<p>That writes <strong>two</strong> directories side by side:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>my-first-agent-profile/   the profile — your editable source of truth
+my-first-agent/           the project — rendered from the profile
+</pre></div>
+</div>
+<p>The first build copies the preset into <code class="docutils literal notranslate"><span class="pre">my-first-agent-profile/</span></code>; every later
+build reads that directory as it stands. Nothing in this tutorial needs you to
+edit it, but that is where changes go when you want them to survive a rebuild —
+see <a class="reference internal" href="../how-to/build-profiles.html"><span class="doc">Build Profiles</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>First run may take 1–2 minutes to create a virtual environment and install
@@ -522,8 +531,16 @@ configure them manually.</p>
 <section id="step-3-start-the-agent">
 <h2>Step 3: Start the Agent<a class="headerlink" href="#step-3-start-the-agent" title="Link to this heading">#</a></h2>
 <p>From your project directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>claude
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>claude<span class="w"> </span>chat
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">osprey</span> <span class="pre">claude</span> <span class="pre">chat</span></code> is the recommended way to launch: it reads
+<code class="docutils literal notranslate"><span class="pre">config.yml</span></code> and points the agent at your configured LLM provider.
+Launching the bare agent CLI skips this, so it silently uses whatever
+provider your shell environment points at — see
+<a class="reference internal" href="../how-to/use-cli-chat.html"><span class="doc">Use the CLI Chat Interface</span></a>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -573,6 +590,20 @@ results together — vacuum pressure and magnet readback values.</p>
 <span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mock</span>
 <span class="w">  </span><span class="nt">writes_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">   </span><span class="c1"># Changed from false</span>
 </pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">config.yml</span></code> is a <em>build-time</em> input. Safety-critical fields like
+<code class="docutils literal notranslate"><span class="pre">writes_enabled</span></code> are baked into the agent’s generated configuration (the
+<code class="docutils literal notranslate"><span class="pre">.claude/</span></code> artifacts), so editing <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> alone does not change the
+agent’s behavior. Regenerate the artifacts and relaunch:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>claude<span class="w"> </span>regen
+osprey<span class="w"> </span>claude<span class="w"> </span>chat
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can check whether your artifacts are in sync at any time with
+<code class="docutils literal notranslate"><span class="pre">osprey</span> <span class="pre">claude</span> <span class="pre">status</span></code>. If you forget to regenerate, the agent warns you at
+startup that <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> has drifted from its generated configuration.</p>
 </div>
 <p><strong>2. Write within limits</strong> (succeeds with approval)</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>You: Write 150.0 to SR:MAG:QF:01:CURRENT:SP
@@ -658,6 +689,9 @@ finder, electronic logbook search, archiver access, and a web terminal</p></li>
 <li><p><strong>Architecture deep dive</strong>: The <a class="reference internal" href="conceptual-tutorial.html"><span class="doc">Conceptual Tutorial</span></a> explains the
 MCP server architecture, connector system, and safety mechanisms</p></li>
 <li><p><strong>CLI reference</strong>: See <a class="reference internal" href="../cli-reference/index.html"><span class="doc">CLI Reference</span></a> for all <code class="docutils literal notranslate"><span class="pre">osprey</span></code> commands</p></li>
+<li><p><strong>Launch options &amp; providers</strong>: <a class="reference internal" href="../how-to/use-cli-chat.html"><span class="doc">Use the CLI Chat Interface</span></a> explains what
+<code class="docutils literal notranslate"><span class="pre">osprey</span> <span class="pre">claude</span> <span class="pre">chat</span></code> sets up and how to point the agent at a non-default LLM
+provider via <code class="docutils literal notranslate"><span class="pre">config.yml</span></code></p></li>
 </ul>
 </section>
 </section>

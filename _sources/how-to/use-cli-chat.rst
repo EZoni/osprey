@@ -2,8 +2,8 @@ Use the CLI Chat Interface
 ==========================
 
 The CLI chat interface launches the Osprey agent in your native terminal while
-running OSPREY's companion services in the background. This gives you the full
-agent TUI experience — keyboard shortcuts, slash commands, native
+running OSPREY's companion services in the background. This runs the agent
+in the full terminal TUI — keyboard shortcuts, slash commands, native
 scrollback — with access to companion services (artifact gallery, session
 analytics, etc.) via their URLs in a browser.
 
@@ -31,12 +31,18 @@ Options
 
 .. code-block:: bash
 
-   osprey claude chat --project /path/to/project   # explicit project dir
+   osprey claude chat -p /path/to/project           # explicit project dir (--project)
    osprey claude chat --resume SESSION_ID           # resume a previous session
    osprey claude chat --print                       # non-interactive (pipe-friendly)
    osprey claude chat --effort high                 # set effort level
+   osprey claude chat --no-pin                      # ignore the pinned CLI version
 
 When ``--project`` is omitted, the current directory is used.
+
+If ``claude_code.cli_version`` is set in ``config.yml``, chat launches that
+exact agent CLI version instead of whatever is installed globally, so every
+launch of the project behaves the same. ``--no-pin`` opts out and uses the
+global installation.
 
 Companion Services
 ------------------

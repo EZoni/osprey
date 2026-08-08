@@ -60,12 +60,12 @@
     <link rel="icon" href="../_static/logo.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Add a Connector" href="add-connector.html" />
-    <link rel="prev" title="Use the CLI Chat Interface" href="use-cli-chat.html" />
+    <link rel="next" title="Facility Knowledge" href="use-facility-knowledge.html" />
+    <link rel="prev" title="Add an MCP Server" href="add-mcp-server.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Aug 08, 2026"/>
   </head>
   
   
@@ -368,18 +368,44 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="configure-providers.html">Configure LLM Providers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deploy-project.html">Container Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-profiles.html">Build Profiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="add-mcp-server.html">Add an MCP Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use-web-terminal.html">Use the Web Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configure-providers.html">Configure LLM Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-open-models.html">Run Open &amp; Local Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy-project.html">Container Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containerize-project.html">Containerize a Project</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="web-terminal/index.html">Web Terminal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="web-terminal/operate.html">Run the Web Terminal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-terminal/theming.html">Theming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-terminal/panels.html">Panels</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="multi-user.html">Multi-User Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="use-cli-chat.html">Use the CLI Chat Interface</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Python Execution Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_interactive_query.html">Non-Interactive Agent Queries</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="event-dispatch.html">Event Dispatch</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chat-bridges/index.html">Chat Bridges</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chat-bridges/nextcloud-talk.html">Nextcloud Talk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chat-bridges/google-chat.html">Google Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chat-bridges/add-a-channel.html">Add Your Own Chat Service</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="monitor-agent.html">Monitor Your OSPREY Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configure-health-checks.html">Configure Health Checks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="add-connector.html">Add a Connector</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="add-mcp-server.html">Add an MCP Server</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Python Execution Service</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="use-facility-knowledge.html">Facility Knowledge</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="facility-rules.html">Facility Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="okf-bundle.html">The OKF Bundle</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="use-channel-finder.html">How to Use the Channel Finder</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="ariel/index.html">Logbook Search Service (ARIEL)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="ariel/osprey-integration.html">Osprey Integration</a></li>
@@ -389,6 +415,8 @@
 <li class="toctree-l2"><a class="reference internal" href="ariel/standalone-deployment.html">Standalone Deployment</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="use-virtual-accelerator.html">Use the Virtual Accelerator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-assisted-grid-scan.html">Agent-Assisted Grid Scan Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli-reference/index.html">CLI Reference</a></li>
 </ul>
 </div>
@@ -459,14 +487,14 @@ plotting, and control-system interactions on behalf of the operator.</p>
 <section id="what-it-does">
 <h2>What It Does<a class="headerlink" href="#what-it-does" title="Link to this heading">#</a></h2>
 <p>The service accepts Python source code, applies layered safety checks, and
-runs it in either a <strong>container</strong> (Jupyter kernel over WebSocket) or a
-<strong>local subprocess</strong> (<code class="docutils literal notranslate"><span class="pre">ExecutionWrapper</span></code>). Results—stdout, stderr,
-figures, and saved artifacts—are returned as structured JSON.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Osprey agent → execute MCP tool → safety checks → container / subprocess → result JSON
+runs it as a <strong>subprocess</strong> on the host (<code class="docutils literal notranslate"><span class="pre">ExecutionWrapper</span></code>).
+Results—stdout, stderr, figures, and saved artifacts—are returned as
+structured JSON.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Osprey agent → execute MCP tool → safety checks → host subprocess → result JSON
 </pre></div>
 </div>
-<p>All packages installed in the deployment environment are available to
-executed code (numpy, pandas, scipy, matplotlib, plotly, etc.).
+<p>Executed code can import whatever is installed in the project’s environment;
+see <a class="reference internal" href="#executor-environment"><span class="std std-ref">The Execution Environment</span></a> for how to find out what that is.
 A <code class="docutils literal notranslate"><span class="pre">save_artifact(obj,</span> <span class="pre">title=&quot;Untitled&quot;,</span> <span class="pre">description=&quot;&quot;,</span> <span class="pre">artifact_type=None,</span> <span class="pre">category=&quot;&quot;)</span></code>
 helper is injected into the subprocess namespace for saving objects to the
 artifact gallery. The <code class="docutils literal notranslate"><span class="pre">artifact_type</span></code> parameter overrides automatic type
@@ -514,58 +542,67 @@ them.</p></td>
 </tbody>
 </table>
 </div>
-<p>The tool returns a JSON object containing:</p>
+<p>On success the tool returns a JSON object whose top level describes the saved
+run:</p>
 <ul class="simple">
-<li><p><strong>output</strong> / <strong>error</strong> — stdout and stderr truncated to 500 characters.
-Full output is available in the saved data file.</p></li>
-<li><p><strong>artifact_ids</strong> — IDs for any figures or saved objects.</p></li>
-<li><p><strong>notebook_artifact_id</strong> — ID of an auto-generated notebook capturing the
-run.</p></li>
-<li><p><strong>gallery_url</strong> — link to the artifact gallery (when available).</p></li>
-<li><p><strong>has_errors</strong>, <strong>status</strong> (<code class="docutils literal notranslate"><span class="pre">&quot;Success&quot;</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;Failed&quot;</span></code>), and
+<li><p><strong>status</strong> (<code class="docutils literal notranslate"><span class="pre">&quot;success&quot;</span></code>), <strong>artifact_id</strong>, <strong>title</strong>, and <strong>data_file</strong>
+for the saved artifact.</p></li>
+<li><p><strong>summary</strong> — a nested object with the run details: the truncated
+<strong>output</strong> / <strong>error</strong> (500 characters; full output is in the saved data
+file), a <code class="docutils literal notranslate"><span class="pre">&quot;Success&quot;</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;Failed&quot;</span></code> <strong>status</strong>, <strong>has_errors</strong>, and
 <strong>detected_patterns</strong> for control-system operation metadata.</p></li>
+<li><p><strong>artifact_ids</strong> — IDs for any figures or saved objects, and
+<strong>notebook_artifact_id</strong> for the auto-generated notebook capturing the run.</p></li>
+<li><p><strong>gallery_url</strong> — link to the artifact gallery (when available).</p></li>
 </ul>
+<p>A failing run does not return this object as a normal result: the tool raises
+a structured error (<code class="docutils literal notranslate"><span class="pre">error_type:</span> <span class="pre">&quot;execution_error&quot;</span></code>) whose <code class="docutils literal notranslate"><span class="pre">details</span></code> field
+carries the same information, so the agent receives an explicit error rather
+than a status field it might overlook.</p>
 </section>
-<section id="execution-modes">
-<h2>Execution Modes<a class="headerlink" href="#execution-modes" title="Link to this heading">#</a></h2>
-<section id="container-execution">
-<h3>Container Execution<a class="headerlink" href="#container-execution" title="Link to this heading">#</a></h3>
-<p>The default mode. Code is sent to a Jupyter kernel running inside a Docker
-container via WebSocket. Separate containers can be configured for
-<code class="docutils literal notranslate"><span class="pre">readonly</span></code> and <code class="docutils literal notranslate"><span class="pre">readwrite</span></code> modes:</p>
+<section id="where-code-runs">
+<h2>Where Code Runs<a class="headerlink" href="#where-code-runs" title="Link to this heading">#</a></h2>
+<p>Agent-authored Python runs as a subprocess on the same host as the Osprey
+agent. This is the only execution backend, so there is nothing to choose
+between:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># config.yml</span>
 <span class="nt">execution</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">execution_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">container</span>
-<span class="nt">services</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">jupyter</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">read</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span>
-<span class="w">        </span><span class="nt">port_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8088</span>
-<span class="w">      </span><span class="nt">write</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span>
-<span class="w">        </span><span class="nt">port_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8089</span>
+<span class="w">  </span><span class="nt">execution_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subprocess</span>
 </pre></div>
 </div>
-<p>Container mode provides the strongest isolation—the MCP server
-process is never exposed to user code.</p>
+<p><code class="docutils literal notranslate"><span class="pre">subprocess</span></code> is the default and the key can be left out entirely. Two older
+values still load, so existing projects keep working: <code class="docutils literal notranslate"><span class="pre">local</span></code> is the former
+name for this same backend and is accepted silently, and <code class="docutils literal notranslate"><span class="pre">container</span></code> is
+treated as <code class="docutils literal notranslate"><span class="pre">subprocess</span></code> and logs a one-time warning naming the config file it
+came from. Any other value is a configuration error.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ExecutionWrapper</span></code> wraps user code with safety monkeypatches (e.g.
+<code class="docutils literal notranslate"><span class="pre">epics.caput()</span></code> validation against the limits database), writes the wrapped
+script to an execution folder, and runs it. The subprocess working directory is
+set to the project root so that relative workspace paths (e.g.
+<code class="docutils literal notranslate"><span class="pre">_agent_data/data/002_archiver_read.json</span></code>) resolve correctly.</p>
 </section>
-<section id="local-subprocess-execution">
-<h3>Local Subprocess Execution<a class="headerlink" href="#local-subprocess-execution" title="Link to this heading">#</a></h3>
-<p>When containers are unavailable, the service falls back to local subprocess
-execution. The <code class="docutils literal notranslate"><span class="pre">ExecutionWrapper</span></code> wraps user code with safety
-monkeypatches (e.g., <code class="docutils literal notranslate"><span class="pre">epics.caput()</span></code> validation against the limits
-database), writes the wrapped script to an execution folder, and runs it
-as a subprocess:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">execution</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">execution_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
-<span class="w">  </span><span class="nt">python_env_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/path/to/venv</span><span class="w">   </span><span class="c1"># optional; defaults to sys.executable</span>
+<section id="the-execution-environment">
+<span id="executor-environment"></span><h2>The Execution Environment<a class="headerlink" href="#the-execution-environment" title="Link to this heading">#</a></h2>
+<p>Executed code runs in the project’s own virtual environment
+(<code class="docutils literal notranslate"><span class="pre">&lt;project&gt;/.venv</span></code>) when the project has one, and otherwise in the
+interpreter running Osprey. <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> records no interpreter path and
+offers no setting to point execution somewhere else — which environment
+exists is decided when the project is built, from the build profile’s
+<code class="docutils literal notranslate"><span class="pre">environment:</span></code> block (see <a class="reference internal" href="build-profiles.html"><span class="doc">Build Profiles</span></a>).</p>
+<p>Anything installed in that environment is importable by executed code:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>my-project
+uv<span class="w"> </span>pip<span class="w"> </span>list<span class="w">             </span><span class="c1"># what executed code can import</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>lmfit<span class="w">    </span><span class="c1"># importable by the next execution</span>
 </pre></div>
 </div>
-<p>The subprocess working directory is set to the project root so that
-relative workspace paths (e.g. <code class="docutils literal notranslate"><span class="pre">_agent_data/data/002_archiver_read.json</span></code>)
-resolve correctly.</p>
-</section>
+<p>The description the agent sees for the <code class="docutils literal notranslate"><span class="pre">execute</span></code> tool is generated from this
+environment rather than from a fixed list, so the agent is told what is really
+installed. It is computed once when the MCP server starts: a package installed
+mid-session is importable straight away, but the agent will not know about it
+until the next session. If the environment cannot be read at startup, the
+description names no packages at all instead of guessing.</p>
+<p>A container image built from the project installs the same package set as the
+project’s own environment, so executed code sees the same imports either way.</p>
 </section>
 <section id="security-model">
 <h2>Security Model<a class="headerlink" href="#security-model" title="Link to this heading">#</a></h2>
@@ -582,8 +619,8 @@ rejection.</p></li>
 <code class="docutils literal notranslate"><span class="pre">LimitsValidator</span></code>)—at runtime, <code class="docutils literal notranslate"><span class="pre">epics.caput()</span></code> calls are
 intercepted and validated against the channel limits database.
 Out-of-range values are blocked.</p></li>
-<li><p><strong>Process isolation</strong>—code always runs outside the MCP server
-process, either in a container or a local subprocess.</p></li>
+<li><p><strong>Process isolation</strong>—code always runs in a separate subprocess, never
+inside the MCP server process.</p></li>
 <li><p><strong>Execution timeout</strong>—configurable via
 <code class="docutils literal notranslate"><span class="pre">python_executor.execution_timeout_seconds</span></code> (default 600 s). The
 process is killed if it exceeds the limit.</p></li>
@@ -618,9 +655,7 @@ requests user confirmation before calling <code class="docutils literal notransl
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>sync
 </pre></div>
 </div>
-<p>No additional setup is needed for local subprocess mode. For container
-mode, configure the Jupyter container endpoints in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> as shown
-above.</p>
+<p>No additional setup is needed.</p>
 </section>
 <section id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
@@ -645,20 +680,20 @@ safety checks, and pattern detection.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="use-cli-chat.html"
+       href="add-mcp-server.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Use the CLI Chat Interface</p>
+        <p class="prev-next-title">Add an MCP Server</p>
       </div>
     </a>
     <a class="right-next"
-       href="add-connector.html"
+       href="use-facility-knowledge.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Add a Connector</p>
+        <p class="prev-next-title">Facility Knowledge</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -683,11 +718,8 @@ safety checks, and pattern detection.</p></li>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-it-does">What It Does</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp-tool-interface">MCP Tool Interface</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-modes">Execution Modes</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#container-execution">Container Execution</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-subprocess-execution">Local Subprocess Execution</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-code-runs">Where Code Runs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-execution-environment">The Execution Environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-model">Security Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>

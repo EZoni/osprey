@@ -61,11 +61,11 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Logbook Search Service (ARIEL)" href="ariel/index.html" />
-    <link rel="prev" title="Add a Connector" href="add-connector.html" />
+    <link rel="prev" title="The OKF Bundle" href="okf-bundle.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Aug 08, 2026"/>
   </head>
   
   
@@ -368,18 +368,44 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="configure-providers.html">Configure LLM Providers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deploy-project.html">Container Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-profiles.html">Build Profiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="add-mcp-server.html">Add an MCP Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use-web-terminal.html">Use the Web Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configure-providers.html">Configure LLM Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-open-models.html">Run Open &amp; Local Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy-project.html">Container Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containerize-project.html">Containerize a Project</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="web-terminal/index.html">Web Terminal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="web-terminal/operate.html">Run the Web Terminal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-terminal/theming.html">Theming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-terminal/panels.html">Panels</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="multi-user.html">Multi-User Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="use-cli-chat.html">Use the CLI Chat Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use-python-executor.html">Python Execution Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_interactive_query.html">Non-Interactive Agent Queries</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="event-dispatch.html">Event Dispatch</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chat-bridges/index.html">Chat Bridges</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chat-bridges/nextcloud-talk.html">Nextcloud Talk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chat-bridges/google-chat.html">Google Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chat-bridges/add-a-channel.html">Add Your Own Chat Service</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="monitor-agent.html">Monitor Your OSPREY Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configure-health-checks.html">Configure Health Checks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="add-connector.html">Add a Connector</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="add-mcp-server.html">Add an MCP Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use-python-executor.html">Python Execution Service</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="use-facility-knowledge.html">Facility Knowledge</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="facility-rules.html">Facility Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="okf-bundle.html">The OKF Bundle</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">How to Use the Channel Finder</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="ariel/index.html">Logbook Search Service (ARIEL)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="ariel/osprey-integration.html">Osprey Integration</a></li>
@@ -389,6 +415,8 @@
 <li class="toctree-l2"><a class="reference internal" href="ariel/standalone-deployment.html">Standalone Deployment</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="use-virtual-accelerator.html">Use the Virtual Accelerator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent-assisted-grid-scan.html">Agent-Assisted Grid Scan Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli-reference/index.html">CLI Reference</a></li>
 </ul>
 </div>
@@ -454,8 +482,8 @@
 <span id="how-to-channel-finder"></span><h1>How to Use the Channel Finder<a class="headerlink" href="#how-to-use-the-channel-finder" title="Link to this heading">#</a></h1>
 <p>The Channel Finder translates natural language queries (e.g., “beam current,”
 “terminal voltage”) into control system addresses (e.g., <code class="docutils literal notranslate"><span class="pre">SR:DCCT:Current</span></code>,
-<code class="docutils literal notranslate"><span class="pre">TMVST</span></code>). It uses LLM-powered pipelines so operators do not need to memorize
-technical naming conventions.</p>
+<code class="docutils literal notranslate"><span class="pre">TMVST</span></code>). It uses LLM-based pipelines, so a query can use everyday terms
+rather than exact channel names.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>Hellert et al. (2025), <em>From Natural Language to Control Signals</em>,
@@ -468,6 +496,9 @@ technical naming conventions.</p>
 <span class="w">  </span><span class="nt">pipeline_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in_context</span><span class="w">  </span><span class="c1"># or &quot;hierarchical&quot; or &quot;middle_layer&quot;</span>
 </pre></div>
 </div>
+<p>When <code class="docutils literal notranslate"><span class="pre">pipeline_mode</span></code> is unset, OSPREY auto-detects: it uses the first
+pipeline that has a database configured, preferring middle layer, then
+hierarchical, then in-context.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Pipeline</p></th>
@@ -492,8 +523,9 @@ technical naming conventions.</p>
 <h2>In-Context Pipeline<a class="headerlink" href="#in-context-pipeline" title="Link to this heading">#</a></h2>
 <p>Loads the entire channel database into the LLM context for direct semantic
 matching.</p>
-<p><strong>Pipeline stages:</strong> query splitting, semantic matching against full database,
-iterative validation/correction.</p>
+<p><strong>How it works:</strong> a single inner-LLM call — the complete channel database is
+embedded in the system prompt and the model returns the most relevant channels
+in one shot (no query-splitting or iterative-correction stage).</p>
 <p>The database uses a flat JSON structure loaded by <code class="docutils literal notranslate"><span class="pre">TemplateChannelDatabase</span></code>,
 with standalone entries and template entries for device families:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -514,6 +546,23 @@ with standalone entries and template entries for device families:</p>
 osprey<span class="w"> </span>channel-finder<span class="w"> </span>validate
 osprey<span class="w"> </span>channel-finder<span class="w"> </span>preview
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">build-database</span></code> writes into the <strong>profile</strong> the project was built from
+(<code class="docutils literal notranslate"><span class="pre">processed/channel_database.json</span></code> inside its <code class="docutils literal notranslate"><span class="pre">data/</span></code> tree), not into the
+project — a generated database belongs beside the inputs it came from, and
+survives a rebuild there. That deliberately marks the project stale; clear
+the advisory by rebuilding:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>channel-finder<span class="w"> </span>build-database
+osprey<span class="w"> </span>build<span class="w"> </span>my-project<span class="w"> </span>my-profile/profile.yml<span class="w"> </span>--force
+</pre></div>
+</div>
+<p>The pipelines — and a bare <code class="docutils literal notranslate"><span class="pre">validate</span></code> / <code class="docutils literal notranslate"><span class="pre">preview</span></code> — read the database
+referenced in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> (under <code class="docutils literal notranslate"><span class="pre">data/channel_databases/</span></code>). If you
+built to a different name, either point the commands at it with
+<code class="docutils literal notranslate"><span class="pre">--database</span></code> or update the config path; otherwise you are silently
+validating the old database.</p>
 </div>
 </section>
 <section id="hierarchical-pipeline">
@@ -549,11 +598,12 @@ osprey<span class="w"> </span>channel-finder<span class="w"> </span>preview<span
 <h2>Middle Layer Pipeline<a class="headerlink" href="#middle-layer-pipeline" title="Link to this heading">#</a></h2>
 <p>A React agent explores the database using query tools
 (<code class="docutils literal notranslate"><span class="pre">list_systems</span></code>, <code class="docutils literal notranslate"><span class="pre">list_families</span></code>, <code class="docutils literal notranslate"><span class="pre">inspect_fields</span></code>,
-<code class="docutils literal notranslate"><span class="pre">list_channel_names</span></code>, <code class="docutils literal notranslate"><span class="pre">get_common_names</span></code>).</p>
+<code class="docutils literal notranslate"><span class="pre">list_channels</span></code>, <code class="docutils literal notranslate"><span class="pre">get_common_names</span></code>, <code class="docutils literal notranslate"><span class="pre">statistics</span></code>, <code class="docutils literal notranslate"><span class="pre">validate</span></code>, and —
+when DuckDB is installed — <code class="docutils literal notranslate"><span class="pre">query_channels</span></code>).</p>
 <p>The database follows MATLAB Middle Layer (MML) functional organization
 (System -&gt; Family -&gt; Field -&gt; ChannelNames). Convert from MML exports:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>osprey.services.channel_finder.utils.mml_converter<span class="w"> </span><span class="se">\</span>
-<span class="w">   </span>--input<span class="w"> </span>path/to/mml_exports.py<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--input<span class="w"> </span>path/to/mml_exports.py:MML_ao_SR<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--output<span class="w"> </span>data/channel_databases/middle_layer.json
 </pre></div>
 </div>
@@ -574,16 +624,15 @@ osprey<span class="w"> </span>channel-finder<span class="w"> </span>web<span cla
 <span class="w">  </span><span class="nt">pipelines</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">in_context</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="nv">template</span><span class="p p-Indicator">,</span><span class="nt"> path</span><span class="p">:</span><span class="w"> </span><span class="nv">data/channel_databases/in_context.json</span><span class="p p-Indicator">}</span>
-<span class="w">      </span><span class="nt">processing</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">chunk_dictionary</span><span class="p">:</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="nt"> chunk_size</span><span class="p">:</span><span class="w"> </span><span class="nv">50</span><span class="p p-Indicator">}</span>
 <span class="w">    </span><span class="nt">hierarchical</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="nv">hierarchical</span><span class="p p-Indicator">,</span><span class="nt"> path</span><span class="p">:</span><span class="w"> </span><span class="nv">data/channel_databases/hierarchical.json</span><span class="p p-Indicator">}</span>
 <span class="w">    </span><span class="nt">middle_layer</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="nv">middle_layer</span><span class="p p-Indicator">,</span><span class="nt"> path</span><span class="p">:</span><span class="w"> </span><span class="nv">data/channel_databases/middle_layer.json</span><span class="p p-Indicator">}</span>
 <span class="w">  </span><span class="nt">benchmark</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">dataset_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data/benchmarks/queries.json</span>
-<span class="nt">benchmark</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">execution</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">max_concurrent_queries</span><span class="p">:</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">results_dir</span><span class="p">:</span><span class="w"> </span><span class="nv">data/benchmarks/results</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="c1"># Concurrency and output dir are set per run via CLI flags</span>
+<span class="w">    </span><span class="c1"># (osprey channel-finder benchmark --concurrency / --output-dir);</span>
+<span class="w">    </span><span class="c1"># they are not read from config.yml.</span>
 </pre></div>
 </div>
 </section>
@@ -593,7 +642,8 @@ osprey<span class="w"> </span>channel-finder<span class="w"> </span>web<span cla
 (<code class="docutils literal notranslate"><span class="pre">channel_finder_in_context</span></code>, <code class="docutils literal notranslate"><span class="pre">channel_finder_hierarchical</span></code>,
 <code class="docutils literal notranslate"><span class="pre">channel_finder_middle_layer</span></code>). The active server is selected from
 <code class="docutils literal notranslate"><span class="pre">channel_finder.pipeline_mode</span></code> in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> and wired into the
-agent automatically by <code class="docutils literal notranslate"><span class="pre">osprey</span> <span class="pre">deploy</span></code>. There is no public Python
+agent’s artifacts when you run <code class="docutils literal notranslate"><span class="pre">osprey</span> <span class="pre">build</span></code> (or <code class="docutils literal notranslate"><span class="pre">osprey</span> <span class="pre">claude</span> <span class="pre">regen</span></code>
+after editing the config). There is no public Python
 <code class="docutils literal notranslate"><span class="pre">find_channels(...)</span></code> entry point — drive the resolver from natural
 language via the agent, or invoke the CLI directly:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>osprey<span class="w"> </span>channel-finder<span class="w"> </span>generate<span class="w">     </span><span class="c1"># build database from template</span>
@@ -619,12 +669,12 @@ service source into your project for custom modifications.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="add-connector.html"
+       href="okf-bundle.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Add a Connector</p>
+        <p class="prev-next-title">The OKF Bundle</p>
       </div>
     </a>
     <a class="right-next"

@@ -16,7 +16,8 @@ without arguments launches an interactive TUI menu.
 
    osprey                    # Launch interactive menu
    osprey --version          # Show framework version
-   osprey build PROJECT      # Build project from preset or profile
+   osprey profile            # Author, validate, and inspect build profiles
+   osprey build PROJECT      # Build a project from a build profile
    osprey config             # Manage configuration
    osprey deploy COMMAND     # Manage services
    osprey health             # Check system health
@@ -26,6 +27,7 @@ without arguments launches an interactive TUI menu.
    osprey ariel              # ARIEL logbook search service
    osprey artifacts          # Artifact gallery
    osprey web                # Launch web terminal
+   osprey theme-lab          # Design and preview a theme in the browser
    osprey scaffold           # Build artifact overrides
    osprey audit              # Audit project or profile safety
    osprey skills             # Manage bundled Osprey skills
@@ -64,32 +66,106 @@ Manage project configuration. Interactive menu if no subcommand is given.
    osprey config show
    osprey config set-control-system epics
 
+osprey profile
+==============
+
+Author, validate, and inspect build profiles. A profile directory is the
+durable, facility-owned input to ``osprey build`` — see
+:doc:`/how-to/build-profiles`.
+
+.. code-block:: bash
+
+   osprey profile new TARGET_DIR --preset NAME [OPTIONS]
+   osprey profile validate TARGET
+   osprey profile presets
+
+``osprey profile new TARGET_DIR --preset NAME``
+   Materialize an editable profile directory from a bundled preset.
+   ``TARGET_DIR`` is created and populated with a standalone ``profile.yml``
+   (the preset's full configuration written out explicitly, no ``extends:``),
+   the preset's ``data/`` tree copied verbatim, an ``.env.example`` listing
+   every variable the agent reads, an ``.env`` seeded from your shell (only
+   when it held keys for a provider this profile references), a ``.gitignore``,
+   and a ``README.md``. Directories for your own artifacts (``rules/``,
+   ``skills/``, …) are not created up front — make the ones you need. Refuses
+   to overwrite an existing directory unless ``--force`` is given.
+
+   ``-O, --override PATH`` — Layer a YAML file on top of the preset before
+   writing (repeatable, in order).
+
+   ``--set KEY.PATH=VALUE`` — Inline override baked into the written profile
+   (repeatable). RHS is parsed as YAML. Wins over ``-O`` at the same key.
+
+   ``--force`` — Replace an existing profile directory, deleting its current
+   contents including any edits you made there. Only a directory that is a
+   materialized profile (contains ``profile.yml``) or is empty is replaced;
+   anything else is refused. Nothing is deleted until the replacement profile
+   has fully rendered, so a failed run leaves the old directory untouched.
+
+``osprey profile validate TARGET``
+   Check a profile without building anything. ``TARGET`` is a profile
+   directory (its ``profile.yml`` is used) or a path to a profile file.
+   Resolves ``extends:`` chains and reports every problem found — convention
+   directories, the ``data:`` tree, service templates, lifecycle steps, env
+   vars. Exits 0 when valid, 2 with the accumulated errors when not.
+
+``osprey profile presets``
+   List bundled preset names, one per line. Every name printed is usable as
+   ``--preset NAME`` for ``osprey profile new`` and ``osprey build``.
+
+.. code-block:: bash
+
+   osprey profile presets
+   osprey profile new my-profile --preset control-assistant --set model=opus
+   osprey profile validate my-profile/
+   osprey build my-agent my-profile/profile.yml
+
 osprey build
 ============
 
-Build a facility-specific assistant from a bundled preset or a YAML profile.
-See :doc:`/how-to/build-profiles`.
+Build a facility-specific assistant from a build profile. Every build reads a
+profile — there is no build straight out of a bundled preset. See
+:doc:`/how-to/build-profiles`.
 
 .. code-block:: bash
 
    osprey build PROJECT_NAME [PROFILE] [OPTIONS]
 
-``--preset NAME`` — Use a bundled preset (mutually exclusive with positional
-``PROFILE``). Run ``osprey build --list-presets`` to see available names.
+``--preset NAME`` — Materialize ``<PROJECT_NAME>-profile/`` from a bundled
+preset and build from it (mutually exclusive with positional ``PROFILE``). Only
+the *first* such build materializes; every later one reuses that directory as it
+stands. Run ``osprey build --list-presets`` to see available names.
 
-``-O, --override PATH`` — Layer a YAML file on top of the base preset/profile
-(repeatable, in order).
+``-O, --override PATH`` — Layer a YAML file on top of the profile (repeatable,
+in order). Written into the profile when it already exists.
 
 ``--set KEY.PATH=VALUE`` — Inline scalar/list override (repeatable). RHS is
-parsed as YAML so ``true``, ``[a,b]``, and bare ints/floats are typed.
+parsed as YAML so ``true``, ``[a,b]``, and bare ints/floats are typed. Written
+into the profile when it already exists, replacing the value at the dotted key
+path.
 
 ``--list-presets`` — Print bundled preset names and exit.
 
 ``-o, --output-dir PATH`` — Output directory (default: current directory).
 
-``-f, --force`` — Overwrite existing project directory.
+``-f, --force`` — Re-render an existing project directory in place; ``.env``,
+``_agent_data/``, and ``.git`` are preserved. Never touches the profile —
+replace one with ``osprey profile new --force``.
+
+``--tier [1|3]`` — Channel-database tier. Selects which
+``data/channel_databases/tiers/tier{N}/`` database the rendered config points
+at, overriding the paradigm-derived default. Written into the profile like
+``--set``.
 
 ``-s, --stream`` — Stream build step output in real time.
+
+``--skip-lifecycle`` — Skip the profile's ``pre_build``, ``post_build``, and
+``validate`` steps.
+
+``--skip-deps`` — Skip venv creation and dependency installation (CI mode).
+
+``--runtime-root PATH`` — Override ``project_root`` in the rendered config, for
+container builds where the build path differs from the runtime path.
 
 .. code-block:: bash
 
@@ -107,7 +183,8 @@ Manage Docker/Podman services for Osprey projects.
 
    osprey deploy ACTION [OPTIONS]
 
-**Actions:** ``up``, ``down``, ``restart``, ``status``, ``build``, ``clean``, ``rebuild``.
+**Actions:** ``up``, ``down``, ``restart``, ``status``, ``build``, ``clean``, ``rebuild``,
+``decommission``, ``prune``, ``nuke``, ``seed``, ``passwd``.
 
 - ``up`` -- Start all configured services.
 - ``down`` -- Stop all services.
@@ -116,6 +193,13 @@ Manage Docker/Podman services for Osprey projects.
 - ``build`` -- Build/prepare compose files without starting services.
 - ``clean`` -- Remove containers and volumes (destructive).
 - ``rebuild`` -- Clean, rebuild, and restart services.
+- ``decommission USER`` -- Remove a single user's web-terminal workspace.
+- ``prune`` -- Remove workspaces for users no longer in the user index.
+- ``nuke`` -- Tear down the entire multi-user web-terminal stack (destructive).
+- ``seed [USER]`` -- (Re)seed web-terminal workspaces from the user index;
+  ``USER`` targets one user, omit to reseed all.
+- ``passwd USER`` -- Change one web-terminal user's login password (password
+  authentication only). Prompts without echoing, and ends that user's sessions.
 
 **Options (apply to all actions):**
 
@@ -129,12 +213,25 @@ Manage Docker/Podman services for Osprey projects.
 
 ``--expose`` -- Expose services on all network interfaces (``0.0.0.0``).
 
+**Lifecycle flags (multi-user web-terminal actions):**
+
+``--archive`` -- Archive a user's workspace before removing it (``decommission``/``prune`` only; mutually exclusive with ``--purge``).
+
+``--purge`` -- Permanently delete a user's workspace without archiving (``decommission``/``prune`` only; mutually exclusive with ``--archive``).
+
+``-y, --yes`` -- Assume yes to confirmation prompts (``decommission``/``prune``/``nuke``).
+
+``--dry-run`` -- Show what would happen without making changes (``prune`` only).
+
 .. code-block:: bash
 
    osprey deploy up -d
    osprey deploy status
    osprey deploy rebuild --dev
    osprey deploy down
+   osprey deploy decommission alice --archive
+   osprey deploy prune --dry-run
+   osprey deploy nuke --yes
 
 osprey health
 =============
@@ -177,6 +274,11 @@ status.
    ``-p, --project DIRECTORY`` — Project directory (default: current directory).
 
    ``--dry-run`` — Show what would change without writing files.
+
+   ``--runtime-root PATH`` — Rewrite ``project_root`` in ``config.yml`` to
+   PATH (comment-preserving) and re-render artifacts against it. Use after
+   copying a built project into a container image; see
+   :doc:`/how-to/containerize-project`.
 
 ``osprey claude status [OPTIONS]``
    Display provider configuration, model tier mappings, per-agent model
@@ -224,7 +326,7 @@ Options: ``-p, --project PATH``, ``-v, --verbose``
 ``osprey channel-finder preview``
    Preview a channel database with flexible display options.
 
-``osprey channel-finder generate [--output-dir DIR] [--source PATH] [--format in_context|hierarchical|middle_layer|all] [--tier 1|2|3|none] [--validate]``
+``osprey channel-finder generate [--output-dir DIR] [--source PATH] [--format in_context|hierarchical|middle_layer|all] [--tier 1|3|none] [--validate]``
    Generate channel databases from a hierarchical template. Produces one
    or more pipeline formats (default: all three) with optional tier filtering.
 
@@ -313,7 +415,7 @@ analysis sessions. Artifacts are written by the Osprey agent via ``save_artifact
 osprey web
 ==========
 
-Launch the Web Terminal interface. See :doc:`/how-to/use-web-terminal`.
+Launch the Web Terminal interface. See :doc:`/how-to/web-terminal/operate`.
 
 ``osprey web [OPTIONS]``
    Start the web terminal server (default: ``http://127.0.0.1:8087``).
@@ -340,12 +442,37 @@ Launch the Web Terminal interface. See :doc:`/how-to/use-web-terminal`.
    osprey web --detach
    osprey web stop
 
+osprey theme-lab
+================
+
+Design a theme in the browser. Starts a local server for OSPREY's design
+system and opens the Theme Lab, where you pick an accent color and see it
+previewed live on dark and light mock-ups of the web terminal, with contrast
+badges that update as you go. Copying the export block gives you a
+ready-to-paste description of the theme to request; the lab itself does not
+write theme files. See :doc:`/how-to/web-terminal/theming`.
+
+``osprey theme-lab [OPTIONS]``
+   Serve the Theme Lab and open it. The URL is printed as well, so the page can
+   be opened by hand if no browser appears.
+
+   ``-p, --port INTEGER`` — Port to serve on (default: an unused port chosen
+   automatically).
+
+   ``--no-browser`` — Do not open a browser window; print the URL only.
+
+.. code-block:: bash
+
+   osprey theme-lab
+   osprey theme-lab --port 9000
+   osprey theme-lab --no-browser
+
 osprey audit
 ============
 
 Audit a build profile or project directory for safety risks. Uses an AI
-reviewer to analyze permissions, hooks, MCP server configs, overlay files,
-and lifecycle scripts.
+reviewer to analyze permissions, hooks, MCP server configs, convention
+directories, and lifecycle scripts.
 
 .. code-block:: bash
 
@@ -371,9 +498,9 @@ osprey scaffold
 ===============
 
 Manage build artifact ownership. Framework-managed build artifacts (agents,
-rules, etc.) can be claimed per-facility for in-place editing. Claimed files
-are marked user-owned in ``config.yml`` and ``.osprey-manifest.json``, and
-subsequent ``osprey claude regen`` runs skip them.
+rules, etc.) can be claimed per-facility for in-place editing. A claim moves
+the artifact into the profile the project was built from; the next build copies
+it back and registers it as user-owned, so ``osprey claude regen`` skips it.
 
 All subcommands accept a common flag:
 
@@ -384,24 +511,53 @@ All subcommands accept a common flag:
    user-owned).
 
 ``osprey scaffold claim NAME``
-   Claim ownership of a framework artifact for in-place editing. If the file
-   doesn't exist yet, the framework template is rendered in place at the
-   canonical output path. If it already exists, it is marked user-owned.
+   Move an artifact into the profile this project was built from, into the
+   convention directory for its kind (``rules/safety.md``,
+   ``skills/orbit-check/``, ``services/postgresql/``, ``hooks/my-guard``). A
+   file moves as a file; skills and services move as whole directories. The
+   project copy is *moved*, not copied — it lives in one place until the next
+   ``osprey build ... --force`` deploys it again.
+
+   Refused, with the reason: a project with no resolvable profile (nothing
+   would keep the edit); a **generated** artifact rather than an authored one —
+   ``CLAUDE.md``, ``.claude/settings.json``, ``.mcp.json``,
+   ``hook_config.json`` — where the message names the config key that does
+   control it; and a profile slot that is already occupied. See
+   :ref:`profile-claim`.
 
 ``osprey scaffold diff NAME``
    Show a unified diff between the current framework template (re-rendered)
-   and your file at the canonical output path.
+   and your file at the canonical output path. For a claimed service
+   directory, diffs every file in the directory against the packaged
+   template.
 
 ``osprey scaffold unclaim NAME``
    Release ownership and restore framework management. The next
    ``osprey claude regen`` will overwrite the file with the framework template.
+   Ownership a build derived from the profile is re-registered by the next
+   build, so this holds only until then — give the artifact up for good by
+   deleting it from the profile's convention directory.
+
+``osprey scaffold web-terminals lint --config PATH``
+   Validate the ``modules.web_terminals`` stanza of a facility config
+   (port-family allocation, reserved service names, duplicate users, persona
+   references). Exits non-zero on error-severity findings; warnings do not
+   fail the check, so it is safe to wire into a CI gate.
+
+``osprey scaffold web-terminals render --config PATH -o DIRECTORY``
+   Render the multi-user deployment artifacts (docker-compose overlay, nginx
+   routing fragment, static landing page) into ``-o/--output``. Lints first by
+   default and aborts on errors; ``--no-lint`` skips the pre-check.
 
 .. code-block:: bash
 
    osprey scaffold list                           # Show all artifacts
    osprey scaffold claim agents/channel-finder    # Claim for editing
+   osprey scaffold claim services/postgresql      # Freeze a service template
    osprey scaffold diff agents/channel-finder     # Compare yours vs framework
    osprey scaffold unclaim rules/safety           # Restore framework management
+   osprey scaffold web-terminals lint --config facility-config.yml
+   osprey scaffold web-terminals render --config facility-config.yml -o deploy/
 
 osprey skills
 =============
@@ -431,6 +587,17 @@ can be installed either globally or into a specific project's
      project-locally (into the profile repo's ``.claude/skills/``) by the
      last phase of the ``osprey-build-interview`` skill, so ``/osprey-build-deploy``
      is available wherever the profile repo is cloned.
+   * ``osprey-contribute`` — walks a contributor through the GitHub Flow
+     journey from a working-tree change to a merged PR on ``main`` (branching,
+     atomic commits, push, PR, rebase, merge).
+   * ``osprey-pre-commit`` — runs the quick / ci / premerge check scripts at
+     the right gate before committing, pushing, or opening a PR.
+   * ``osprey-release`` — cuts a CalVer release: opens the version-bump PR,
+     tags the merge commit, and verifies the automated PyPI publish.
+   * ``osprey-design-philosophy`` — OSPREY's design and architecture principles
+     for designing, adding, or reviewing a feature. Useful for framework
+     contributors; install globally to have it available when working on
+     ``src/osprey`` in any session.
 
 .. code-block:: bash
 

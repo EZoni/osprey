@@ -65,7 +65,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Aug 08, 2026"/>
   </head>
   
   
@@ -368,18 +368,44 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../configure-providers.html">Configure LLM Providers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deploy-project.html">Container Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build-profiles.html">Build Profiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../add-mcp-server.html">Add an MCP Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use-web-terminal.html">Use the Web Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configure-providers.html">Configure LLM Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../run-open-models.html">Run Open &amp; Local Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy-project.html">Container Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../containerize-project.html">Containerize a Project</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../web-terminal/index.html">Web Terminal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../web-terminal/operate.html">Run the Web Terminal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../web-terminal/theming.html">Theming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../web-terminal/panels.html">Panels</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../multi-user.html">Multi-User Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../use-cli-chat.html">Use the CLI Chat Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use-python-executor.html">Python Execution Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../non_interactive_query.html">Non-Interactive Agent Queries</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../event-dispatch.html">Event Dispatch</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chat-bridges/index.html">Chat Bridges</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chat-bridges/nextcloud-talk.html">Nextcloud Talk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chat-bridges/google-chat.html">Google Chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chat-bridges/add-a-channel.html">Add Your Own Chat Service</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitor-agent.html">Monitor Your OSPREY Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configure-health-checks.html">Configure Health Checks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../add-connector.html">Add a Connector</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../add-mcp-server.html">Add an MCP Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-python-executor.html">Python Execution Service</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../use-facility-knowledge.html">Facility Knowledge</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../facility-rules.html">Facility Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../okf-bundle.html">The OKF Bundle</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../use-channel-finder.html">How to Use the Channel Finder</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Logbook Search Service (ARIEL)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Osprey Integration</a></li>
@@ -389,6 +415,8 @@
 <li class="toctree-l2"><a class="reference internal" href="standalone-deployment.html">Standalone Deployment</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-virtual-accelerator.html">Use the Virtual Accelerator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../agent-assisted-grid-scan.html">Agent-Assisted Grid Scan Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cli-reference/index.html">CLI Reference</a></li>
 </ul>
 </div>
@@ -512,13 +540,13 @@ Osprey agent selects the appropriate tool based on the user’s query.</p>
 <td><p>Browse entries with pagination and filters</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">filter_options</span></code></p></td>
-<td><p>Get available filter values (tags, authors, date ranges)</p></td>
+<td><p>Get distinct values for a filterable field (authors or source systems)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
 <td><p>Check ARIEL service health and configuration</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">entry_publish</span></code></p></td>
-<td><p>Publish a new logbook entry</p></td>
+<td><p>Publish an existing ARIEL entry to the facility logbook</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">capabilities</span></code></p></td>
 <td><p>List available search capabilities and their status</p></td>
@@ -539,7 +567,9 @@ Osprey agent selects the appropriate tool based on the user’s query.</p>
 </section>
 <section id="search-result-structure">
 <h2>Search Result Structure<a class="headerlink" href="#search-result-structure" title="Link to this heading">#</a></h2>
-<p>The MCP tool returns a structured result containing:</p>
+<p>Internally, each search produces an <code class="docutils literal notranslate"><span class="pre">ARIELSearchResult</span></code> with the fields
+below; the MCP tools serialize this into their own JSON envelope for the
+agent:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
 <col style="width: 25.0%" />
@@ -575,7 +605,7 @@ Osprey agent selects the appropriate tool based on the user’s query.</p>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">diagnostics</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">tuple[SearchDiagnostic,</span> <span class="pre">...]</span></code></p></td>
-<td><p>Per-mode timing and result counts</p></td>
+<td><p>Structured diagnostics (level, source, message) from search execution</p></td>
 </tr>
 </tbody>
 </table>

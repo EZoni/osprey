@@ -87,7 +87,7 @@ on their corpus before committing to the full deployment.
 
          .. code-block:: bash
 
-            osprey deploy up
+            osprey deploy up -d
 
          Once the container is running, run database migrations and
          ingest the bundled demo logbook with embeddings:
@@ -144,12 +144,13 @@ Quick edits (one-off tweaks)
 For small in-place adjustments to a project you just built, edit files
 directly:
 
-1. **Edit** ``.claude/rules/facility.md``. The default ships with a
-   placeholder for the "Example Research Facility" (Primary Source /
-   Transport & Delivery / Experimental Stations, with an EPICS channel
-   pattern table). Replace this content with your facility's real
-   terminology, system names, and naming conventions so the agent uses
-   the right vocabulary when interpreting user questions.
+1. **Edit** ``.claude/rules/facility.md``. The default ships with a thin
+   placeholder for the "Example Research Facility (ERF)" --- a facility-identity
+   stub (name, type, mission) plus a pointer to the ``facility_knowledge`` tools
+   (``list_concepts``/``read_concept``/``search``) for deeper content. Replace
+   this with your facility's real terminology, system names, and naming
+   conventions so the agent uses the right vocabulary when interpreting user
+   questions.
 
    .. note::
 
@@ -157,8 +158,10 @@ directly:
       during ``osprey build``. ``osprey claude regen`` will preserve your
       edits.
 
-2. **Set provider credentials in ``.env``** (e.g. ``ANTHROPIC_API_KEY``
-   or ``CBORG_API_KEY``). The default provider is ``anthropic``.
+2. **Set provider credentials in ``my-logbook-profile/.env``** (e.g.
+   ``ANTHROPIC_API_KEY`` or ``CBORG_API_KEY``). The default provider is
+   ``anthropic``. The profile owns the project's secrets: the build derives the
+   project's ``.env`` from it, so a value set there survives every rebuild.
 
 3. **Replace the demo logbook seed.** The bundled
    ``data/logbook_seed/demo_logbook.json`` is 28 entries of fictional
@@ -174,17 +177,21 @@ Durable customization (a profile you own)
 -----------------------------------------
 
 For changes you want to keep across rebuilds — adding a custom skill,
-overriding a rule, wiring up a real logbook — scaffold an editable build
-profile that extends the ``ariel-standalone`` preset:
+overriding a rule, wiring up a real logbook — materialize an editable build
+profile from the ``ariel-standalone`` preset:
 
 .. code-block:: bash
 
-   osprey build --emit-profile my-ariel-profile --preset ariel-standalone
+   osprey profile new my-ariel-profile --preset ariel-standalone
 
-This writes a ``my-ariel-profile/`` directory with ``profile.yml`` (extending
-the preset) plus ``overlays/{rules,skills,agents}/`` sentinels. Edit
-``profile.yml`` to layer config overrides and overlay artifacts on top of the
-preset, then rebuild whenever you change something:
+This writes a ``my-ariel-profile/`` directory containing a standalone
+``profile.yml`` — the preset's full configuration written out explicitly, with
+no ``extends:`` back to the preset — plus the preset's ``data/`` tree and an
+``.env.example`` listing every variable the agent reads. Directories for your
+own artifacts are not created up front: make a ``rules/``, ``skills/`` or
+``agents/`` directory when you have something to put in it, and the build
+carries its contents into the project. Edit ``profile.yml``, the data files, and
+those directories, then rebuild whenever you change something:
 
 .. code-block:: bash
 

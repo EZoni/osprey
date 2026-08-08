@@ -4,7 +4,7 @@ MCP Servers
 OSPREY exposes control system operations, data retrieval, and workspace
 management as tools through `FastMCP <https://github.com/jlowin/fastmcp>`_
 servers. The Osprey agent discovers servers from ``.mcp.json`` at startup and calls
-tools via stdio JSON-RPC. There are **7 in-tree MCP servers**; build profiles
+tools via stdio JSON-RPC. There are **8 in-tree MCP servers**; build profiles
 can inject additional servers beyond the core set below.
 
 
@@ -24,7 +24,10 @@ safety-limits enforcement on all write operations.
 
 - ``channel_read`` -- Read current values from one or more control system channels.
 - ``channel_write`` -- Write values to one or more control system channels (requires human approval).
-- ``archiver_read`` -- Retrieve historical archived data for one or more channels over a time range.
+- ``archiver_read`` -- Retrieve historical archived data for one or more channels over a
+  time range. ``processing`` selects the per-bin aggregation (``raw``, ``mean``, ``min``,
+  ``max``, ``median``, ``std``, ``count``) and ``bin_size`` sets the bin width in seconds;
+  ``bin_size=0`` returns full resolution and is valid only with ``processing="raw"``.
 - ``channel_limits`` -- Query the channel safety limits database (lookup, pattern match, summary).
 
 
@@ -198,3 +201,23 @@ and entry creation with attachments.
 - ``entry_publish`` -- Publish an existing ARIEL entry to the facility logbook.
 - ``capabilities`` -- Report available ARIEL search capabilities.
 - ``status`` -- Get ARIEL service health, database connectivity, and statistics.
+
+
+Facility Knowledge
+------------------
+
+``osprey_facility_knowledge``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Package: ``osprey.mcp_server.facility_knowledge``
+
+Serves a facility's curated knowledge bundle (OKF §2 concept documents) so the
+agent can look up operational know-how and draft new concepts for human review.
+
+**Tools:**
+
+- ``capabilities`` -- Report facility knowledge bundle capabilities.
+- ``list_concepts`` -- List all concepts in the facility knowledge bundle.
+- ``read_concept`` -- Read a concept document by its OKF §2 concept ID.
+- ``search`` -- Search the facility knowledge bundle for a query string.
+- ``draft_concept`` -- Draft a new concept document for human review and approval.
